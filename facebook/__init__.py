@@ -45,8 +45,8 @@ __version__ = version.__version__
 
 FACEBOOK_GRAPH_URL = "https://graph.facebook.com/"
 FACEBOOK_OAUTH_DIALOG_URL = "https://www.facebook.com/dialog/oauth?"
-VALID_API_VERSIONS = ["2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11"]
-VALID_SEARCH_TYPES = ["page", "event", "group", "place", "placetopic", "user"]
+VALID_API_VERSIONS = ["1.0", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11", "2.12"]
+VALID_SEARCH_TYPES = ["post", "page", "event", "group", "place", "placetopic", "user"]
 
 
 class GraphAPI(object):
@@ -80,14 +80,16 @@ class GraphAPI(object):
 
     def __init__(self, access_token=None, timeout=None, version=None,
                  proxies=None, session=None):
-        # The default version is only used if the version kwarg does not exist.
-        default_version = VALID_API_VERSIONS[0]
-
         self.access_token = access_token
         self.timeout = timeout
         self.proxies = proxies
         self.session = session or requests.Session()
+        # The default version is only used if the version kwarg does not exist.
+        self.default_version = VALID_API_VERSIONS[11]
+        self.version = "v" + self.default_version
+        self.set_version(version=version)
 
+    def set_version(self, version):
         if version:
             version_regex = re.compile("^\d\.\d{1,2}$")
             match = version_regex.search(str(version))
@@ -101,7 +103,7 @@ class GraphAPI(object):
                 raise GraphAPIError("Version number should be in the"
                                     " following format: #.# (e.g. 2.0).")
         else:
-            self.version = "v" + default_version
+            self.version = "v" + self.default_version
 
     def get_permissions(self, user_id):
         """Fetches the permissions object from the graph."""
