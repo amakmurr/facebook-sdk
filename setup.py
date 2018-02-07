@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup
 
-exec(open("facebook/version.py").read())
+exec(open("facebook_sdk/version.py").read())
 
 setup(
     name='facebook-sdk',
@@ -14,7 +14,7 @@ setup(
     maintainer_email='martey+facebook-sdk@mobolic.com',
     url='https://github.com/mobolic/facebook-sdk',
     license='Apache',
-    packages=["facebook"],
+    packages=["facebook_sdk"],
     long_description=open("README.rst").read(),
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
