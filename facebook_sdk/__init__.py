@@ -159,7 +159,7 @@ class GraphAPI(object):
             args = parse_qs(urlparse(next).query)
             del args['access_token']
 
-    def put_object(self, parent_object, connection_name, **data):
+    def put_object(self, parent_object, connection_name=None, **data):
         """Writes the given object to the graph, connected to the given parent.
 
         For example,
@@ -179,8 +179,11 @@ class GraphAPI(object):
 
         """
         assert self.access_token, "Write operations require an access token"
+        path = "{0}/{1}".format(self.version, parent_object)
+        if connection_name:
+            path += '/{0}'.format(connection_name)
         return self.request(
-            "{0}/{1}/{2}".format(self.version, parent_object, connection_name),
+            path,
             post_args=data,
             method="POST")
 
