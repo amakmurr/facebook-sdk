@@ -1,0 +1,10 @@
+# Python
+.git/*
+.github/*
+.idea/*
+*.pyc
+*.ini
+test*
+.fuse_hidden*
+logs/*
+deployment/*
