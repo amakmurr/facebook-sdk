@@ -396,6 +396,12 @@ class GraphAPIError(Exception):
 
         Exception.__init__(self, self.message)
 
+    def __iter__(self):
+        yield 'result', self.result
+        yield 'code', self.code
+        yield 'type', self.type
+        yield 'message', self.message
+
 
 def get_user_from_cookie(cookies, app_id, app_secret):
     """Parses the cookie set by the official Facebook JavaScript SDK.
